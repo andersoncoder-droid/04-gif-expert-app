@@ -1,18 +1,23 @@
 import { useState } from 'react';
 
-export const AddCategory = () => {
-  const [inputValue, setinputValue] = useState('Star Wars');
+export const AddCategory = ({ onNewCategory }) => {
+  const [inputValue, setInputValue] = useState('Star Wars');
 
   const onInputChange = ({ target }) => {
-    setinputValue(target.value);
+    setInputValue(target.value);
   };
 
-  const onsubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
+    if (inputValue.trim().length <= 1) return;
+
+    // setCategories((categories) => [inputValue, ...categories]);
+    setInputValue('');
+    onNewCategory(inputValue.trim());
   };
 
   return (
-    <form onSubmit={(event) => onsubmit(event)}>
+    <form onSubmit={onSubmit}>
       <input
         type='text'
         placeholder='Buscar gifs'
